@@ -1,0 +1,104 @@
+ 
+ 
+ bool _filterByCategories(List<CategoryModel> categories,categoryId){
+          bool result = false;
+     if(categories.isNotEmpty){
+         
+         result= category.parentId == categoryId ||
+              category.id == categoryId;
+              
+              if(result){ return result;}
+              _filterByCategories(categories.subCategories);
+    }
+     return result;
+    }
+    
+    
+      bool _filterByCategoriesRecursive(CategoryModel category,categoryId){
+    bool result = false;
+    
+
+   //   result= categories.any((cat) => cat.id == categoryId ||
+     //     cat.parentId == categoryId)  ;
+        
+        result = category.id == categoryId || category.parentId == categoryId;
+
+      if(result){ return result;}
+      if(category.subCategories.isEmpty){
+      _filterByCategories(categories.subCategories);
+    }
+    return result;
+  }
+    
+ 
+ Map<String, List<QubeModel>> _filterByCategories(
+      List<QubeModel> qubes, List<CategoryModel> categories) {
+    Map<String, List<QubeModel>> result = Map();
+    List<String> hiddenCategories =
+        Provider.of<InitialAppNotifier>(context, listen: false).hideCategories;
+    qubes.forEach((qube) {
+      if (qube.categories != null) {
+          qube.categories!.forEach((element) {
+
+            if (result.containsKey(element.name)) {
+              // root category
+              result[element.name]!.add(qube);
+            } else {
+              String actualCategory =
+              _getActualCategory(categories, element.name);
+              if (result.containsKey(actualCategory)) {
+                // root category
+                result[actualCategory]!.add(qube);
+              } else {
+                if (actualCategory.contains('&')) {
+                  if (!hiddenCategories
+                      .contains(actualCategory.replaceAll(' & ', ' et '))) {
+                    result.putIfAbsent(
+                      actualCategory.replaceAll(' & ', ' et '),
+                          () => [qube],
+                    );
+                  }
+                } else {
+                  if (!hiddenCategories.contains(actualCategory) &&
+                      actualCategory != "") {
+                    result.putIfAbsent(
+                      actualCategory,
+                          () => [qube],
+                    );
+                  }
+                }
+              }
+            }
+          });
+      }
+    });
+    return result;
+  }
+
+  bool _isSubCategory(List<CategoryModel> subCats, String categoryToFind) {
+    bool result = false;
+    subCats.forEach((subCategory) {
+      if (subCategory.name == categoryToFind)
+        result = true;
+      else
+        _isSubCategory(subCategory.subCategories, categoryToFind);
+    });
+    return result;
+  }
+
+  String _getActualCategory(List<CategoryModel> cats, String categoryToFind) {
+    String result = '';
+    cats.forEach((category) {
+      if (category.name == categoryToFind) {
+        result = category.name;
+      }
+    });
+    if (result.isEmpty) {
+      cats.forEach((category) {
+        if (_isSubCategory(category.subCategories, categoryToFind)) {
+          result = category.name;
+        }
+      });
+    }
+    return result;
+  }

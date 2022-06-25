@@ -1,0 +1,45 @@
+{
+  "groups": [
+    {
+      "name": "app",
+      "type": "ar.modularsoft.config.AppProperties",
+      "sourceType": "ar.modularsoft.config.AppProperties"
+    },
+    {
+      "name": "app.auth",
+      "type": "ar.modularsoft.config.AppProperties$Auth",
+      "sourceType": "ar.modularsoft.config.AppProperties",
+      "sourceMethod": "getAuth()"
+    },
+    {
+      "name": "app.oauth2",
+      "type": "ar.modularsoft.config.AppProperties$OAuth2",
+      "sourceType": "ar.modularsoft.config.AppProperties",
+      "sourceMethod": "getOauth2()"
+    }
+  ],
+  "properties": [
+    {
+      "name": "app.auth.token-expiration-msec",
+      "type": "java.lang.Long",
+      "sourceType": "ar.modularsoft.config.AppProperties$Auth",
+      "defaultValue": 0
+    },
+    {
+      "name": "app.auth.token-issuer",
+      "type": "java.lang.String",
+      "sourceType": "ar.modularsoft.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.auth.token-secret",
+      "type": "java.lang.String",
+      "sourceType": "ar.modularsoft.config.AppProperties$Auth"
+    },
+    {
+      "name": "app.oauth2.authorized-redirect-uris",
+      "type": "java.util.List<java.lang.String>",
+      "sourceType": "ar.modularsoft.config.AppProperties$OAuth2"
+    }
+  ],
+  "hints": []
+}

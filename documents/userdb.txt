@@ -1,0 +1,4 @@
+ 
+CREATE USER '3comerce'@'localhost' IDENTIFIED BY 'upcommerce2021';
+GRANT ALL PRIVILEGES ON * . * TO '3comerce'@'localhost';
+FLUSH PRIVILEGES;
