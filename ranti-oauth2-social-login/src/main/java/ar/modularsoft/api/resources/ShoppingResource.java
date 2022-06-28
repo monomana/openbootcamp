@@ -35,7 +35,7 @@ public class ShoppingResource {
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
     public void createShopping(@Valid @RequestBody  ShoppingDto shoppingDto) {
-        // shoppingDto.setCreatedAt(new Date());
+         // shoppingDto.setCreatedAt(new Date());
         this.shoppingService.createShopping(shoppingDto.toShopping());
     }
   // @PreAuthorize("permitAll()")

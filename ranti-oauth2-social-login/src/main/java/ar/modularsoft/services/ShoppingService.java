@@ -43,7 +43,6 @@ System.out.println(categoryname);
 
 
     public void createShopping(Shopping shopping) {
-        shopping.setRegistrationDate(LocalDateTime.now());
         this.shoppingRepository.save(shopping);
     }
 

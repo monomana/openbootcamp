@@ -29,8 +29,8 @@ public class Shopping {
     private int companyId;
     @NotNull
     private BigDecimal amount;
-    @NotNull
-     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+   // @NotNull
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
    // private boolean state;
     @NotNull

@@ -16,9 +16,13 @@ import org.springframework.beans.BeanUtils;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.Clock;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
 import java.util.Date;
 import java.util.Objects;
+import java.util.TimeZone;
 
 @Builder
 @Data //@ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor
@@ -36,7 +40,7 @@ public class ShoppingDto {
     private int companyId;
     @NotNull
     private BigDecimal amount;
-    @NotNull
+    // @NotNull
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime createdAt;
     // private boolean state;
@@ -64,6 +68,17 @@ public class ShoppingDto {
     public void doDefault() {
        if (Objects.isNull(amount)) {
             amount=new BigDecimal(1);
+        }
+       if (Objects.isNull(createdAt) ) {
+           TimeZone.setDefault(TimeZone.getTimeZone("GMT-3:00"));
+           createdAt=LocalDateTime.now().
+                   atZone(ZoneId.of("GMT-3")).
+                  toLocalDateTime();
+           System.out.println("Date in UTC: " +  createdAt);
+          // createdAt=LocalDateTime.now(Clock.systemUTC());
+           //createdAt= LocalDateTime.from(LocalDateTime.now().atZone(ZoneId.systemDefault()));
+           // atZone(ZoneId.systemDefault()) ZoneId.of("UTC")
+           // createdAt= LocalDateTime.from(LocalDateTime.now().atZone(ZoneId.of("America/Cordoba")));
         }
 //        if (Objects.isNull(role)) {
 //            this.role = Role.CUSTOMER;

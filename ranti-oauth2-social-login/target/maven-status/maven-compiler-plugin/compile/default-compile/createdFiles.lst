@@ -8,6 +8,7 @@ ar/modularsoft/config/SetupDataLoader.class
 ar/modularsoft/security/oauth2/user/FacebookOAuth2UserInfo.class
 ar/modularsoft/api/resources/AuthController.class
 ar/modularsoft/services/exceptions/BadRequestException.class
+ar/modularsoft/RantiApplication.class
 ar/modularsoft/validator/ChangePasswordMatchesValidator.class
 ar/modularsoft/exception/handler/RestResponseEntityExceptionHandler.class
 ar/modularsoft/data/model/User.class
@@ -68,7 +69,6 @@ ar/modularsoft/services/exceptions/NotFoundException.class
 ar/modularsoft/data/model/UserClient.class
 ar/modularsoft/validator/ChangePasswordMatches.class
 ar/modularsoft/api/http_errors/ApiExceptionHandler.class
-ar/modularsoft/DemoApplication.class
 ar/modularsoft/security/oauth2/user/GoogleOAuth2UserInfo.class
 ar/modularsoft/exception/UserAlreadyExistAuthenticationException.class
 ar/modularsoft/util/CookieUtils.class

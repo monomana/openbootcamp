@@ -19,7 +19,7 @@ public class SignUpRequest {
 
 	private String providerUserId;
 
-	@NotEmpty
+
 	private String displayName;
 
 	@NotEmpty
