@@ -42,6 +42,7 @@ public class UserResponseDto {
     private Boolean active;
     private LocalDateTime registrationDate;
     private String token;
+    private String refreshToken;
     private String thumbnail;
 
     // static  final String  THUMB = "https://concepto.de/wp-content/uploads/2015/03/paisaje-800x409.jpgº";
