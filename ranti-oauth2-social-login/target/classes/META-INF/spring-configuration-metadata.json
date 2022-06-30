@@ -20,6 +20,12 @@
   ],
   "properties": [
     {
+      "name": "app.auth.refresh-token-expiration-ms",
+      "type": "java.lang.Long",
+      "sourceType": "ar.modularsoft.config.AppProperties$Auth",
+      "defaultValue": 0
+    },
+    {
       "name": "app.auth.token-expiration-msec",
       "type": "java.lang.Long",
       "sourceType": "ar.modularsoft.config.AppProperties$Auth",

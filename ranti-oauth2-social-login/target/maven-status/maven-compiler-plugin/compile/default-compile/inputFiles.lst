@@ -9,7 +9,6 @@
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/dto/LocalUser.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/api/dtos/UserDto.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/services/ProductService.java
-/home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/DemoApplication.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/exception/ResourceNotFoundException.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/services/EmailService.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/api/resources/CompanyResource.java
@@ -46,6 +45,7 @@
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/services/exceptions/ForbiddenException.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/repo/RoleRepository.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/model/Role.java
+/home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/RantiApplication.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/validator/PasswordMatchesValidator.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/data/model/User.java
 /home/mono/developments/spring/ranti/ranti-oauth2-social-login/src/main/java/ar/modularsoft/model/User.java

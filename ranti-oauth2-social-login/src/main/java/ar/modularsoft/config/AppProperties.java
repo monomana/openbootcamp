@@ -23,7 +23,7 @@ public class AppProperties {
 
 		private String tokenSecret;
 		private long tokenExpirationMsec;
-		// private long refreshTokenExpirationMs;
+		private long refreshTokenExpirationMs;
 
 		public String getTokenIssuer() {
 			return tokenIssuer;
@@ -48,15 +48,15 @@ public class AppProperties {
 			this.tokenExpirationMsec = tokenExpirationMsec;
 		}
 
-	/*	public long getRefreshTokenExpirationMs() {
+		public long getRefreshTokenExpirationMs() {
 			return refreshTokenExpirationMs;
 		}
 
-		public void setRefreshTokenExpirationMsec(long refreshTokenExpirationMs) {
+		public void setRefreshTokenExpirationMs(long refreshTokenExpirationMs) {
 			this.refreshTokenExpirationMs = refreshTokenExpirationMs;
 		}
 
-	 */
+
 	}
 
 	public static final class OAuth2 {
