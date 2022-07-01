@@ -49,6 +49,7 @@ public class ShoppingDto {
     @NotNull
     private int orderId;
     private int state;
+    private String suggestion;
 
     private User user;
 
@@ -70,11 +71,16 @@ public class ShoppingDto {
             amount=new BigDecimal(1);
         }
        if (Objects.isNull(createdAt) ) {
-           TimeZone.setDefault(TimeZone.getTimeZone("GMT-3:00"));
-           createdAt=LocalDateTime.now().
-                   atZone(ZoneId.of("GMT-3")).
+
+       TimeZone.setDefault(TimeZone.getTimeZone("GMT-3:00"));
+           createdAt=LocalDateTime.now();
+                 /*  atZone(ZoneId.of("GMT-3")).
                   toLocalDateTime();
            System.out.println("Date in UTC: " +  createdAt);
+
+                  */
+
+
           // createdAt=LocalDateTime.now(Clock.systemUTC());
            //createdAt= LocalDateTime.from(LocalDateTime.now().atZone(ZoneId.systemDefault()));
            // atZone(ZoneId.systemDefault()) ZoneId.of("UTC")

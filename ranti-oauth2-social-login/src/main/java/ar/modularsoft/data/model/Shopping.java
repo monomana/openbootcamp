@@ -39,6 +39,7 @@ public class Shopping {
     private int orderId;
     @NotNull
     private int state;
+    private String suggestion;
 
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "userId",insertable = false,updatable = false)

@@ -1,0 +1,3 @@
+-- user: mauricio
+-- created_at: 20220630 18:50  
+ALTER TABLE `order_cache` ADD COLUMN `OCA_SUGERENCIA` VARCHAR(1000) AFTER `OCA_PAGO_ESTADO`;
