@@ -101,7 +101,11 @@ public class AuthController {
 		UserResponseDto userResponseDto = null;
 		User user = null;
 		try{
-		if (tokenProvider.validateToken(tokenRefreshRequest)) {
+		if (!tokenProvider.validateToken(tokenRefreshRequest)) {
+			log.error("Exception Ocurred", "Token Expired!");
+			return new ResponseEntity<>(new ApiResponse(false, "Token Expired!"), HttpStatus.UNAUTHORIZED);
+		}
+
 		String email = tokenProvider.getUserEmailFromToken(tokenRefreshRequest);
 		user = userService.findUserByEmail(email).get();
 			String jwtToken = tokenProvider.createToken(user);
@@ -112,10 +116,10 @@ public class AuthController {
 			userResponseDto.setRefreshToken(jwtRefreshToken);
 		System.err.println(user.getEmail());
 		// String jwt = tokenProvider.createToken(authentication);
-		 }
-	} catch (UserAlreadyExistAuthenticationException e) {
+
+	} catch (Error e) {
 		log.error("Exception Ocurred", e);
-		return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<>(new ApiResponse(false, e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
 	}
 		return ResponseEntity.ok(userResponseDto);
 

@@ -37,6 +37,7 @@ public class OrderSQLDto {
 	private String customerInfo;
 	private Integer blockFP;
 	private Integer statePayment;
+	private String suggestion;
 
 	private List<OrderItemSQL> items;
 	private List<OrderPaymentMethodSQL> paymentMethods;

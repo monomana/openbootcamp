@@ -48,6 +48,8 @@ public class OrderSQL {
 	private Integer blockFP;
 	@Column(name = "OCA_PAGO_ESTADO")
 	private Integer statePayment;
+	@Column(name = "OCA_SUGERENCIA")
+	private String suggestion;
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
 	@JoinColumn(name = "OCA_ID")

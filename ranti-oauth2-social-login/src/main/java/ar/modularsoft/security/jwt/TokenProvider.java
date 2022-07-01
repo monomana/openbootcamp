@@ -10,6 +10,7 @@ import ar.modularsoft.model.Role;
 import ar.modularsoft.dto.LocalUser;
 import com.auth0.jwt.JWT;
 import ar.modularsoft.model.User;
+import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -153,6 +154,8 @@ return Jwts.builder().setSubject(Long.toString(userPrincipal.getUser().getId()))
 		} catch (MalformedJwtException ex) {
 			logger.error("Invalid JWT token");
 		} catch (ExpiredJwtException ex) {
+			logger.error("Expired JWT token");
+		} catch (TokenExpiredException ex) {
 			logger.error("Expired JWT token");
 		} catch (UnsupportedJwtException ex) {
 			logger.error("Unsupported JWT token");
