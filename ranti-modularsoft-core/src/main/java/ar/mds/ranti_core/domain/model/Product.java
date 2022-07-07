@@ -78,7 +78,7 @@ public class Product {
 	@Column(name = "ART_IVAINCLUIDO")
 	private Integer includedIVA;
 	@Column(name = "ART_IVT_ID")
-	private Integer typeIVA;
+	private Integer ivaType;
 	@Column(name = "ART_PRECIO_DOLARES")
 	private Integer dollarPrice;
 	@Column(name = "ART_NPORCIMPINT",columnDefinition = "default 0")

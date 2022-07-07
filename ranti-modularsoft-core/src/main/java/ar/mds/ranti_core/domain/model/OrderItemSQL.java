@@ -41,12 +41,16 @@ public class OrderItemSQL {
 	@Column(name = "OCD_OBSERVACION")
 	private String observation;
 	@Column(name = "OCD_IVA",columnDefinition = "default 0")
-	private BigDecimal customerInfo;
+	private BigDecimal ivaPercentage;
 	@Column(name = "OCD_AOF_ID")
 	private Integer offerId;
 //
 	@ManyToOne()
 	@JoinColumn(name = "PRD_ID",insertable = false,updatable = false)
 	private Product product;
+
+//	@OneToOne(cascade = CascadeType.ALL)
+//	@JoinColumn(name = "OCD_IVA", referencedColumnName = "IVT_ID")
+//	private IvaType ivaType;
 
 }

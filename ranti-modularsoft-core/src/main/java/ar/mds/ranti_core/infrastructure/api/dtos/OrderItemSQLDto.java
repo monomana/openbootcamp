@@ -36,7 +36,7 @@ public class OrderItemSQLDto {
 	private BigDecimal totalAmount;
 	private BigDecimal internalTax;
 	private String observation;
-	private BigDecimal customerInfo;
+	private BigDecimal ivaPercentage;
 	private Integer offerId;
 
 	// private OrderSQL order;

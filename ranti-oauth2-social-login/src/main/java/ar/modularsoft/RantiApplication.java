@@ -32,9 +32,8 @@ public class RantiApplication extends SpringBootServletInitializer {
 	@PostConstruct
 	public void init() {
 
-		TimeZone.setDefault(TimeZone.getTimeZone("GMT-3:00"));
-
-		System.out.println("Date in UTC: " +  LocalDateTime.now().toString());
+//		TimeZone.setDefault(TimeZone.getTimeZone("GMT-3:00"));
+//		System.out.println("Date in UTC: " +  LocalDateTime.now().toString());
 	//	System.out.println("MAIL: "+username );
 	//	System.out.println("PASSW: "+password );
 	}

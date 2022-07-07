@@ -60,6 +60,7 @@ public class CompanyDto {
                 .id(company.getCategory().getId())
                 .code(company.getCategory().getCode())
                 .description(company.getCategory().getDescription())
+                .icon(company.getCategory().getIcon())
                 .build();
         BeanUtils.copyProperties(company, this);
 

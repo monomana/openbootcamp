@@ -41,7 +41,7 @@ public class OrderHistoryItemSQL {
 	@Column(name = "ODE_OBSERVACION")
 	private String observation;
 	@Column(name = "ODE_IVA",columnDefinition = "default 0")
-	private BigDecimal customerInfo;
+	private BigDecimal ivaPercentage;
 
 	@ManyToOne()
 	@JoinColumn(name = "PRD_ID",insertable = false,updatable = false)

@@ -32,6 +32,7 @@ public class ProductsDto {
     private String frontImage;
     private String profileImage;
 
+    private Integer ivaType;
     private BigDecimal stock;
     private Boolean active;
     private LocalDateTime registrationDate;
