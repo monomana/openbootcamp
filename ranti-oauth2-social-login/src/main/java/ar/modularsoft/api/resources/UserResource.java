@@ -3,18 +3,18 @@ package ar.modularsoft.api.resources;
 import ar.modularsoft.api.dtos.UserDto;
 import ar.modularsoft.api.dtos.UserResponseDto;
 import ar.modularsoft.data.model.Role;
-import ar.modularsoft.dto.ChangePasswordDto;
-import ar.modularsoft.dto.LocalUser;
-import ar.modularsoft.dto.LoginRequest;
+import ar.modularsoft.dto.*;
 import ar.modularsoft.service.UserService;
 import ar.modularsoft.services.UserServiceRanti;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ResolvableType;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -36,6 +36,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+@Slf4j
 @Api(tags = "Usuarios")
 @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
 @RestController
@@ -43,6 +44,7 @@ import java.util.stream.Collectors;
 public class UserResource {
     public static final String USERS = "/users";
     public static final String CHANGE_PASSWORD = "/change-password";
+    public static final String UPDATE_STATE = "/update-state";
     public static final String TOKEN = "/token";
 
     public static final String OAUTH2 = "/oauth2";
@@ -71,8 +73,37 @@ public class UserResource {
     @ApiOperation(value = "Este metodo es usado para el password de usuario")
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping(value = CHANGE_PASSWORD)
-    public ResponseEntity<?> authenticateUser(@Valid @RequestBody ChangePasswordDto changePasswordDto) {
+    public ResponseEntity<?> changePassword(@Valid @RequestBody ChangePasswordDto changePasswordDto) {
         return ResponseEntity.ok(userService.changePassword(changePasswordDto));
+    }
+
+    @ApiOperation(value = "Este metodo permite cambiar los datos del usuario")
+    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping()
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserUpdateDto userUpdateDto){
+        try {
+            Optional<UserResponseDto> userResponseDto =userService.updateUser(userUpdateDto);
+            if (!userResponseDto.isPresent()) {
+                return new ResponseEntity<>(new ApiResponse(false, "user not found!"), HttpStatus.BAD_REQUEST);
+            }
+            return ResponseEntity.ok(userResponseDto);
+        }catch (Error e) {
+            log.error("Exception Ocurred", e);
+            return new ResponseEntity<>(new ApiResponse(false, "user not found!"), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @ApiOperation(value = "Este metodo permite cambiar los datos del usuario")
+    @SecurityRequirement(name = "bearerAuth")
+    @PutMapping(value = UPDATE_STATE)
+    public ResponseEntity<?> updateState( @RequestParam String email,
+                                          @RequestParam boolean state){
+        try {
+            return ResponseEntity.ok(userService.updateState(email,state));
+        }catch (Error e) {
+            log.error("Exception Ocurred", e);
+            return new ResponseEntity<>(new ApiResponse(false, "Error "+e.getMessage()), HttpStatus.BAD_REQUEST);
+        }
     }
 
 /*

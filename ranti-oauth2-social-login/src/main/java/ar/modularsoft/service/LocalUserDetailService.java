@@ -18,7 +18,7 @@ import java.util.Optional;
  * @author Modularsoft
  *
  */
-@Primary
+// @Primary
 @Service("localUserDetailService")
 public class LocalUserDetailService implements UserDetailsService {
 

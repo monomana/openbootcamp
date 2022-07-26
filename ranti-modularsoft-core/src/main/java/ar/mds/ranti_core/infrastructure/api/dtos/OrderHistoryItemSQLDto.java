@@ -36,10 +36,6 @@ public class OrderHistoryItemSQLDto {
 
 	public OrderHistoryItemSQLDto(OrderItemSQL orderItem) {
 		BeanUtils.copyProperties(orderItem, this);
-
 	}
-
-
-
 
 }

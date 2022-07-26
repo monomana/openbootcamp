@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RequestMapping("${ranti.company}" + OrderResource.ORDERS)
 public class OrderResource {
     public static final String ORDERS = "/orders";
-    public static final String ORDERS_PENDING = "/pending";
+    public static final String ORDERS_PENDING = "/orders-pending";
     public static final String ORDER_ID_PENDING = "/pending/{order_id}";
     public static final String REFERENCE = "/reference";
 
@@ -50,12 +50,12 @@ public class OrderResource {
       return Mono.just(this.orderService.create(order));
   }
 
-    @GetMapping(ORDERS_PENDING)
+    @GetMapping()
     public Flux<OrderViewSQLDto> getAllOrdersPending() {
         return Flux.fromStream( this.orderService.getAllOrders()
                 .map(OrderViewSQLDto::new));
     }
-    @GetMapping(ORDER_ID_PENDING)
+    @GetMapping(ORDERS_PENDING)
     public Mono<OrderViewSQLDto> getOrderPendingById(@RequestParam(required = false) int orderId) {
         return Mono.just( this.orderService.getOrderById(orderId))
                 .map(OrderViewSQLDto::new);

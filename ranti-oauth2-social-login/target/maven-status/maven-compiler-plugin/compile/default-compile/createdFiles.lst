@@ -16,6 +16,7 @@ ar/modularsoft/data/model/UserClient$UserClientBuilder.class
 ar/modularsoft/data/model/Category.class
 ar/modularsoft/api/dtos/TokenDto.class
 ar/modularsoft/data/model/Company$CompanyBuilder.class
+ar/modularsoft/dto/UserUpdateDto$UserUpdateDtoBuilder.class
 ar/modularsoft/config/WebConfig.class
 ar/modularsoft/dto/ChangePasswordDto.class
 ar/modularsoft/services/ShoppingService.class
@@ -81,6 +82,7 @@ ar/modularsoft/service/UserService.class
 ar/modularsoft/security/oauth2/OAuth2AccessTokenResponseConverterWithDefaults.class
 ar/modularsoft/data/model/Shopping$ShoppingBuilder.class
 ar/modularsoft/exception/ResourceNotFoundException.class
+ar/modularsoft/dto/UserInfo$UserInfoBuilder.class
 ar/modularsoft/repo/RoleRepository.class
 ar/modularsoft/config/SwaggerConfig.class
 ar/modularsoft/data/model/EmailBody$EmailBodyBuilder.class
@@ -93,6 +95,7 @@ ar/modularsoft/dto/SignUpRequest.class
 ar/modularsoft/data/model/User$UserBuilder.class
 ar/modularsoft/exception/BadRequestException.class
 ar/modularsoft/model/Role.class
+ar/modularsoft/dto/UserUpdateDto.class
 ar/modularsoft/data/daos/CategoryRepository.class
 ar/modularsoft/model/User$UserBuilder.class
 ar/modularsoft/security/oauth2/HttpCookieOAuth2AuthorizationRequestRepository.class

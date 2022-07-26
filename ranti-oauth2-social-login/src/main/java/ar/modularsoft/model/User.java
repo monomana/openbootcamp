@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -43,6 +44,7 @@ public class User implements Serializable {
 	@Column(name = "PROVIDER_USER_ID")
 	private String providerUserId;
 
+	@NotNull
 	private String email;
 /*
 	@Column(name = "enabled", columnDefinition = "BIT", length = 1)

@@ -19,8 +19,9 @@ import java.util.List;
 
 @Service
 @Transactional
-@Qualifier("mds.users")
-public class UserDetailsServiceImpl implements UserDetailsService {
+// @Qualifier("mds.users")
+public class UserDetailsServiceImpl // implements UserDetailsService
+{
 
     private final UserRepositoryRanti userRepository;
 
@@ -29,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         this.userRepository = userRepository;
     }
 
-    @Override
+  //  @Override
     public UserDetails loadUserByUsername(final String mobile) {
         User user = userRepository.findByUsername(mobile)
                 .orElseThrow(() -> new UsernameNotFoundException("user not found. " + mobile));

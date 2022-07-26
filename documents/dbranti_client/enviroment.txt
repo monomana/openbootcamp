@@ -1,0 +1,9 @@
+SERVER_PORT=8083;
+RANTI_COMPANY=marybe;
+DB_USER=3comerce;
+REFRESH_TOKEN_EXPIRE=72000;
+TOKEN_ISSUER=ar-modularsoft-ranti;
+TOKEN_SECRET=secret to test;
+TOKEN_EXPIRE=3600;
+DB_PASSWORD=upcommerce2021
+JDBC=mysql://localhost:3306/itvcos_circulo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT

@@ -5,8 +5,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 
-import ar.modularsoft.dto.ChangePasswordDto;
+import ar.modularsoft.api.dtos.UserResponseDto;
+import ar.modularsoft.dto.*;
 import ar.modularsoft.exception.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -16,9 +18,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import ar.modularsoft.dto.LocalUser;
-import ar.modularsoft.dto.SignUpRequest;
-import ar.modularsoft.dto.SocialProvider;
 import ar.modularsoft.exception.OAuth2AuthenticationProcessingException;
 import ar.modularsoft.exception.UserAlreadyExistAuthenticationException;
 import ar.modularsoft.model.Role;
@@ -104,9 +103,13 @@ public class UserServiceImpl implements UserService {
 			throw new OAuth2AuthenticationProcessingException("Email not found from OAuth2 provider");
 		}
 		SignUpRequest userDetails = toUserRegistrationObject(registrationId, oAuth2UserInfo);
-		User user = findUserByEmail(oAuth2UserInfo.getEmail())
-				.orElseThrow(() -> new ResourceNotFoundException("User", "email", oAuth2UserInfo.getEmail()));;
-		if (user != null) {
+		Optional<User> userOptional=findUserByEmail(oAuth2UserInfo.getEmail());
+		User user;
+	//	User user = findUserByEmail(oAuth2UserInfo.getEmail()).get();
+				//.orElseThrow(() -> new ResourceNotFoundException("User", "email", oAuth2UserInfo.getEmail()));
+		// if (user != null ) {
+		if(userOptional.isPresent()){
+			user = userOptional.get();
 			if (!user.getProvider().equals(registrationId) && !user.getProvider().equals(SocialProvider.LOCAL.getProviderType())) {
 				throw new OAuth2AuthenticationProcessingException(
 						"Looks like you're signed up with " + user.getProvider() + " account. Please use your " + user.getProvider() + " account to login.");
@@ -130,6 +133,10 @@ public class UserServiceImpl implements UserService {
 	public boolean changePassword(ChangePasswordDto changePasswordDto) {
 		try {
 			User user = findUserByEmail(changePasswordDto.getEmail()).get();
+			boolean match = passwordEncoder.matches(changePasswordDto.getActualPassword(),user.getPassword());
+			if (!match ) {
+				return false;
+			}
 			user.setPassword(passwordEncoder.encode(changePasswordDto.getPassword()));
 			userRepository.save(user);
 			return true;
@@ -139,10 +146,59 @@ public class UserServiceImpl implements UserService {
 
 	}
 
+
+
 	private User updateExistingUser(User existingUser, OAuth2UserInfo oAuth2UserInfo) {
+
 		existingUser.setUsername(oAuth2UserInfo.getName());
 		return userRepository.save(existingUser);
 	}
+
+	public Optional<UserResponseDto> updateUser(UserUpdateDto userUpdateDto) {
+	//	User user = findUserByEmail(userUpdateDto.getEmail()).get();
+	return	findUserByEmail(
+				userUpdateDto.getEmail()).map(user -> {
+					user=userUpdateDto.pasteFieldsToUpdate(user);
+					return new UserResponseDto(userRepository.save(user));
+				});
+			//	UserResponseDto::new
+	//);
+//		user=userUpdateDto.pasteFieldsToUpdate(user);
+//		return userRepository.save(user);
+	}
+	public String updateState(String email, boolean state) {
+		String result ="" ;
+		Optional<User> userOptional=findUserByEmail(email);
+		if (!userOptional.isPresent()) {
+			return "user not found";
+		}
+		User user= userOptional.get();
+		Stream<Role> roles = user.getRoles().stream();
+		if ((roles.anyMatch(rol -> rol.getName().contains("ADMIN")))) {
+			return result="update don't allowed";
+		}
+		user.setState(state);
+		userRepository.save(user);
+		return "update OK";
+	}
+/*
+	public Optional<UserResponseDto> updateState(String email, boolean state) {
+		return	findUserByEmail(
+				email).map(user -> {
+			Stream<Role> roles = user.getRoles().stream();
+			if ((roles.anyMatch(rol->rol.getName().contains("ADMIN")))) {
+				System.out.println("ROLE ADMIN");
+				return new UserResponseDto(user);
+			}
+			user.setState(state);
+			return new UserResponseDto(userRepository.save(user));
+		});
+ */
+
+//			User user = findUserByEmail(email).get();
+//			user.setState(state);
+//			return userRepository.save(user);
+//	}
 
 	private SignUpRequest toUserRegistrationObject(String registrationId, OAuth2UserInfo oAuth2UserInfo) {
 		return SignUpRequest.getBuilder().addProviderUserID(oAuth2UserInfo.getId()).addDisplayName(oAuth2UserInfo.getName()).addEmail(oAuth2UserInfo.getEmail())

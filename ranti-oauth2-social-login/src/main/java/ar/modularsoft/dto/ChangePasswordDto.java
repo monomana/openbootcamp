@@ -25,6 +25,9 @@ public class ChangePasswordDto {
 	@NotEmpty
 	private String email;
 
+	@NotEmpty
+	private String actualPassword;
+
 	@Size(min = 6, message = "{Size.userDto.password}")
 	private String password;
 

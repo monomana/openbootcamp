@@ -2,6 +2,7 @@ package ar.modularsoft.api.resources;
 
 import javax.validation.Valid;
 
+import ar.modularsoft.api.dtos.TokenDto;
 import ar.modularsoft.api.dtos.UserResponseDto;
 import ar.modularsoft.data.model.Role;
 import ar.modularsoft.model.User;
@@ -96,20 +97,22 @@ public class AuthController {
 		// return ResponseEntity.ok().body(new ApiResponse(true, "User registered successfully"));
 	}
 	@ApiOperation(value = "Este metodo es usado para obtener un nuevo token")
-	@GetMapping("/refreshtoken")
-	public ResponseEntity<?> refreshtoken(@RequestParam String tokenRefreshRequest) {
+	@PostMapping("/refresh-token")
+	public ResponseEntity<?> refreshtoken(@Valid @RequestBody TokenDto tokenRefreshRequest) {
 		UserResponseDto userResponseDto = null;
 		User user = null;
+
 		try{
-		if (!tokenProvider.validateToken(tokenRefreshRequest)) {
+		if (!tokenProvider.validateToken(tokenRefreshRequest.getToken())) {
 			log.error("Exception Ocurred", "Token Expired!");
 			return new ResponseEntity<>(new ApiResponse(false, "Token Expired!"), HttpStatus.UNAUTHORIZED);
 		}
-
-		String email = tokenProvider.getUserEmailFromToken(tokenRefreshRequest);
+		String email = tokenProvider.getUserEmailFromToken(tokenRefreshRequest.getToken());
 		user = userService.findUserByEmail(email).get();
 			String jwtToken = tokenProvider.createToken(user);
 			String jwtRefreshToken = tokenProvider.createRefreshToken(user);
+			tokenRefreshRequest.setToken(jwtToken);
+			tokenRefreshRequest.setRefreshToken(jwtRefreshToken);
 			//	String refreshToken = tokenProvider.createRefreshToken();
 			userResponseDto= new UserResponseDto(user);
 			userResponseDto.setToken(jwtToken);
@@ -121,7 +124,8 @@ public class AuthController {
 		log.error("Exception Ocurred", e);
 		return new ResponseEntity<>(new ApiResponse(false, e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
 	}
-		return ResponseEntity.ok(userResponseDto);
+		return ResponseEntity.ok(tokenRefreshRequest);
+		// return ResponseEntity.ok(userResponseDto);
 
 
 

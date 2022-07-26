@@ -87,6 +87,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 					.and()
 				.successHandler(oAuth2AuthenticationSuccessHandler)
 				.failureHandler(oAuth2AuthenticationFailureHandler);
+//				.and()
+//				.headers().httpStrictTransportSecurity().disable(); // se agrego para que funcione login google en localhost
 
 		// Add our custom Token based authentication filter
 		http.addFilterBefore(tokenAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);
