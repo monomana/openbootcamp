@@ -1,0 +1,48 @@
+minikube start
+minikube start --driver=kvm2
+eval $(minikube docker-env) # on windows minikube docker-env
+docker build -t ranti-main-k8s:1.0 .
+kubectl apply -f app-deployment-simple.yaml
+    kubectl get deployments
+    kubectl get pods
+    kubectl logs ranti-main-k8s-5c5447d99d-9vqz2
+    kubectl get service
+    kubectl get nodes -o wide
+    kubectl get namespace   ## elegir default o el que corresponda
+minikube ip   
+
+
+kubectl -n default  exec -i mysql-7d94c47d8-vzsmf -- mysql -u root -proot ranti < /home/mono/ranti.sql
+
+EXPONER PUERTO DASHBOARD
+kubectl proxy --address='0.0.0.0' --disable-filter=true
+sudo firewall-cmd --zone=public --add-port=8001/tcp --permanent
+ sudo firewall-cmd --reload
+ http://192.168.0.20:8001/api/v1/namespaces/kube-system/services/kubernetes-dashboard/proxy/
+ 
+ 
+ $ ps -ef | grep docker@127.0.0.1
+ ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -N docker@127.0.0.1 -p 55972 -i /Users/FOO/.minikube/machines/minikube/id_rsa -L 30100:10.110.9.150:30500
+ 
+ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -N docker@127.0.0.1 -p 55972 -i /Users/FOO/.minikube/machines/minikube/id_rsa -L TUNNEL_PORT:CLUSTER_IP:TARGET_PORT
+
+
+
+curl $(minikube ip):$NODE_PORT
+
+
+SERVER_PORT=8080;
+MAIL_USERNAME=mjat.util@gmail.com;
+DB_USER=admranti;
+DB_PASSWORD=r4nt1
+DB_NAME=ranti;
+GOOGLE_SECRET=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;
+AUTH_REDIRECT_URI=http://localhost:4200/oauth2/redirect,myandroidapp://oauth2/redirect,myiosapp://oauth2/redirect;
+REFRESH_TOKEN_EXPIRE=72000;
+TOKEN_ISSUER=ar-modularsoft-ranti;
+JDBC=jdbc:mysql://localhost:3306/ranti?useSSL\=false;
+GOOGLE_ID=554059125052-l70dski1muhsidsfbbc79kftdoiarjqd.apps.googleusercontent.com;
+TOKEN_SECRET=secret to test;
+MAIL_PASSWORD=luterano01;
+TOKEN_EXPIRE=3600;
+

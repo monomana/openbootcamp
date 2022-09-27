@@ -1,6 +1,7 @@
 package ar.mds.ranti_core.infrastructure.api.dtos;
 
 
+import ar.mds.ranti_core.domain.model.BranchSQL;
 import ar.mds.ranti_core.domain.model.Product;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -9,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
@@ -31,8 +35,10 @@ public class ProductsDto {
     private String thumbnail;
     private String frontImage;
     private String profileImage;
-
     private Integer ivaType;
+
+    private BranchDto branch;
+
     private BigDecimal stock;
     private Boolean active;
     private LocalDateTime registrationDate;
@@ -44,6 +50,7 @@ public class ProductsDto {
    private BigDecimal priceWhole;
 
     public ProductsDto(Product product) {
+        this.branch=new BranchDto( product.getBranch());
         BeanUtils.copyProperties(product, this);
 
     }

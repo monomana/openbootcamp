@@ -1,4 +1,17 @@
  
-CREATE USER '3comerce'@'localhost' IDENTIFIED BY 'upcommerce2021';
-GRANT ALL PRIVILEGES ON * . * TO '3comerce'@'localhost';
+CREATE USER 'root'@'192.168.1.4' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON * . * TO 'root'@'192.168.1.4';
 FLUSH PRIVILEGES;
+
+CREATE USER 'root'@'localhost' IDENTIFIED BY 'root';
+GRANT ALL PRIVILEGES ON * . * TO 'root'@'localhost';
+FLUSH PRIVILEGES;
+
+
+kubectl -n default  exec -i mysql-7d94c47d8-glzzn -- mysql -u root -proot ranti < /home/mono/ranti.sql
+
+ssh -R 30500:192.168.50.19:30500 $USER@192.168.1.230
+
+
+for f in {1..100}; do (curl --location --request GET 'http://localhost:8083/empresa/articles/?field=code&page=1&size=500' \
+--header 'Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYmYiOjE2NjM3NjI3MTcsInJvbGUiOiJVU0VSIiwiaXNzIjoiYXItbW9kdWxhcnNvZnQtcmFudGkiLCJuYW1lIjoibmlja25hbWUiLCJleHAiOjE2NjM3NjYzMTcsImlhdCI6MTY2Mzc2MjcxNywidXNlciI6ImFkbWluQG1vZHVsYXJzb2Z0LmFyIn0.c-R1Cj2NjtX4kYQrNLeNKA-6RIKKZPaPggITVWjagdQ'); done

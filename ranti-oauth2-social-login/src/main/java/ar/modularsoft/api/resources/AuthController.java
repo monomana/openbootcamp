@@ -143,6 +143,82 @@ public class AuthController {
 	 */
 	}
 
+	@ApiOperation(value = "Este metodo es usado para autenticarse desde la web" )
+	@PreAuthorize("permitAll()")
+	@PostMapping("/signin-web")
+	public ResponseEntity<?> authenticateUserForWeb(@Valid LoginRequest loginRequest) {
+		Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getEmail(), loginRequest.getPassword()));
+		SecurityContextHolder.getContext().setAuthentication(authentication);
+		String jwt = tokenProvider.createToken(authentication);
+		LocalUser localUser = (LocalUser) authentication.getPrincipal();
+		// userService.findUserByEmail(localUser.getEmail());
+		return ResponseEntity.ok(userService.findUserByEmail(
+				localUser.getUser().getEmail()).map(
+				user ->
+				{
+					UserResponseDto userResponseDto= new UserResponseDto(user);
+					userResponseDto.setToken(jwt);
+					String jwtRefreshToken = tokenProvider.createRefreshToken(user);
+					userResponseDto.setRefreshToken(jwtRefreshToken);
+					return userResponseDto;
+				}));
+		// return ResponseEntity.ok(new JwtAuthenticationResponse(jwt, GeneralUtils.buildUserInfo(localUser)));
+	}
+
+	@ApiOperation(value = "Este metodo es usado para registar un usuario que no posea red social desde la web")
+	@PostMapping("/signup-web")
+	public ResponseEntity<?> registerUserForWeb(@Valid SignUpRequest signUpRequest) {
+		UserResponseDto userResponseDto;
+		try {
+			User user=userService.registerNewUser(signUpRequest);
+			Authentication authentication = authenticationManager
+					.authenticate(new UsernamePasswordAuthenticationToken(signUpRequest.getEmail(), signUpRequest.getPassword()));
+			// SecurityContextHolder.getContext().setAuthentication(authentication);
+			String jwt = tokenProvider.createToken(authentication);
+			String jwtRefreshToken = tokenProvider.createRefreshToken(user);
+			userResponseDto= new UserResponseDto(user);
+			userResponseDto.setToken(jwt);
+			userResponseDto.setRefreshToken(jwtRefreshToken);
+
+
+		} catch (UserAlreadyExistAuthenticationException e) {
+			log.error("Exception Ocurred", e);
+			return new ResponseEntity<>(new ApiResponse(false, "Email Address already in use!"), HttpStatus.BAD_REQUEST);
+		}
+		return ResponseEntity.ok(userResponseDto);
+		// return ResponseEntity.ok().body(new ApiResponse(true, "User registered successfully"));
+	}
+
+	@ApiOperation(value = "Este metodo es usado para obtener un nuevo token desde la web")
+	@PostMapping("/refresh-token-web")
+	public ResponseEntity<?> refreshtokenForWeb(@Valid TokenDto tokenRefreshRequest) {
+		UserResponseDto userResponseDto = null;
+		User user = null;
+
+		try{
+			if (!tokenProvider.validateToken(tokenRefreshRequest.getToken())) {
+				log.error("Exception Ocurred", "Token Expired!");
+				return new ResponseEntity<>(new ApiResponse(false, "Token Expired!"), HttpStatus.UNAUTHORIZED);
+			}
+			String email = tokenProvider.getUserEmailFromToken(tokenRefreshRequest.getToken());
+			user = userService.findUserByEmail(email).get();
+			String jwtToken = tokenProvider.createToken(user);
+			String jwtRefreshToken = tokenProvider.createRefreshToken(user);
+			tokenRefreshRequest.setToken(jwtToken);
+			tokenRefreshRequest.setRefreshToken(jwtRefreshToken);
+			//	String refreshToken = tokenProvider.createRefreshToken();
+			userResponseDto= new UserResponseDto(user);
+			userResponseDto.setToken(jwtToken);
+			userResponseDto.setRefreshToken(jwtRefreshToken);
+			System.err.println(user.getEmail());
+			// String jwt = tokenProvider.createToken(authentication);
+
+		} catch (Error e) {
+			log.error("Exception Ocurred", e);
+			return new ResponseEntity<>(new ApiResponse(false, e.getLocalizedMessage()), HttpStatus.UNAUTHORIZED);
+		}
+		return ResponseEntity.ok(tokenRefreshRequest);
+	}
 	private Role extractRoleClaims() {
 		List< String > roleClaims = SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream()
 				.map(GrantedAuthority::getAuthority).collect(Collectors.toList());

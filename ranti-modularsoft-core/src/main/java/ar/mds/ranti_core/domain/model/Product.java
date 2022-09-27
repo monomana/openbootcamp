@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Builder
 @Data //@ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor
@@ -31,8 +32,10 @@ public class Product {
 	private String barcode;
 	@Column(name = "ART_FRACCIONABLE")
 	private Integer fractional;
+/*
 	@Column(name = "ART_RAMO")
 	private Integer branch;
+ */
 	@Column(name = "ART_RUBRO")
 	private Integer category;
 	@Column(name = "ART_SUBRUBRO")
@@ -208,7 +211,14 @@ public class Product {
 	@Column(name = "ART_DISP_FACT_COMP",columnDefinition = "default 0")
 	private Integer availableForPurchaseInvoice;
 
-
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "ART_RAMO", referencedColumnName = "RAM_ID")
+	private BranchSQL branch;
+/*
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+	@JoinColumn(name = "ART_RAMO")
+	private List<BranchSQL> branches;
+*/
 /*
 	@Column(name = "ART_STOCK",columnDefinition = "default 0")
 	private BigDecimal stock;

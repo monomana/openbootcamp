@@ -20,7 +20,6 @@ public class AppProperties {
 
 
 		private  String tokenIssuer;
-
 		private String tokenSecret;
 		private long tokenExpirationMsec;
 		private long refreshTokenExpirationMs;

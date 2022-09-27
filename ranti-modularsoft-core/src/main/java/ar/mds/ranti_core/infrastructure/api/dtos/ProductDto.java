@@ -1,11 +1,15 @@
 package ar.mds.ranti_core.infrastructure.api.dtos;
 
+import ar.mds.ranti_core.domain.model.BranchSQL;
 import ar.mds.ranti_core.domain.model.Shopping;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.BeanUtils;
 
+import javax.persistence.CascadeType;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotBlank;
 
 @Data
@@ -17,6 +21,7 @@ public class ProductDto {
     @NotBlank
     private String description;
     private Integer sold;
+    private BranchSQL branch;
 
     public  ProductDto(Shopping shopping){
         BeanUtils.copyProperties(shopping, this);

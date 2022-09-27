@@ -1,0 +1,76 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ranti-core-k8s
+spec:
+  selector:
+    matchLabels:
+      app: ranti-core-k8s
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: ranti-core-k8s
+    spec:
+      containers:
+        - name: ranti-core-k8s
+          image: ranti-core-k8s:1.0
+          imagePullPolicy: Never
+          ports:
+            - containerPort: 8083
+          env:   # Setting Enviornmental Variables
+            - name: JDBC   # Setting Database host address
+              value: jdbc:mysql://190.228.229.183:6609/itvcos_circulo?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=GMT
+
+#            - name: SERVER_PORT   # Setting Database host address
+#              value: 5000
+
+            - name: RANTI_COMPANY   # Setting Database host address
+              value: marybe
+
+#            - name: GOOGLE_SECRET   # Setting Database host address
+#              value: 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
+
+#            - name: DB_HOST   # Setting Database host address from configMap
+#              value:
+#              valueFrom :
+#                configMapKeyRef :
+#                  name : db-config
+#                  key :  host
+
+#            - name: DB_NAME  # Setting Database name from configMap
+#              value: ranti
+#              valueFrom :
+#                configMapKeyRef :
+#                  name : db-config
+#                  key :  dbName
+
+            - name: DB_USER2  # Setting Database username from Secret
+              value: 3comerce
+#              valueFrom :
+#                secretKeyRef :
+#                  name : mysql-secrets
+#                  key :  username
+
+            - name: DB_PASSWORD2 # Setting Database password from Secret
+              value: upcommerce2021
+#              valueFrom :
+#                secretKeyRef :
+#                  name : mysql-secrets
+#                  key :  password
+
+---
+
+apiVersion: v1 # Kubernetes API version
+kind: Service # Kubernetes resource kind we are creating
+metadata: # Metadata of the resource kind we are creating
+  name: ranti-core-svc
+spec:
+  selector:
+    app: ranti-core-k8s
+  ports:
+    - protocol: "TCP"
+      port: 8083 # The port that the service is running on in the cluster
+      targetPort: 8083 # The port exposed by the service
+      nodePort: 32083 # The port exposed by the service
+  type: LoadBalancer # type of the service.

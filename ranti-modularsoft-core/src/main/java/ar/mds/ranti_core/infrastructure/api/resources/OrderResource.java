@@ -20,6 +20,7 @@ import javax.validation.Valid;
 public class OrderResource {
     public static final String ORDERS = "/orders";
     public static final String ORDERS_PENDING = "/orders-pending";
+    public static final String ORDER_DETAIL = "/detail";
     public static final String ORDER_ID_PENDING = "/pending/{order_id}";
     public static final String REFERENCE = "/reference";
 
@@ -55,8 +56,8 @@ public class OrderResource {
         return Flux.fromStream( this.orderService.getAllOrders()
                 .map(OrderViewSQLDto::new));
     }
-    @GetMapping(ORDERS_PENDING)
-    public Mono<OrderViewSQLDto> getOrderPendingById(@RequestParam(required = false) int orderId) {
+    @GetMapping(ORDER_DETAIL) // AGREGAR PARAMETRO PARA ESTADO
+    public Mono<OrderViewSQLDto> getOrderDetailById(@RequestParam(required = true) int orderId) {
         return Mono.just( this.orderService.getOrderById(orderId))
                 .map(OrderViewSQLDto::new);
     }

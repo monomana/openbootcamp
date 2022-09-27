@@ -27,6 +27,7 @@ public class ProductService {
  public Stream<Product> getAllProducts() {
      return this.productDao.findAll().stream();
  }
+
     public Stream<Product> readAllByCompanyName(String company) {
         return this.productDao.findAll().stream();
     }
