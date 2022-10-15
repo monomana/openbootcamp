@@ -4,6 +4,10 @@ public class Main {
 
     public static void main(String[] args) {
 	// write your code here
+        Persona clientep=new Cliente();
+
+        clientep.getEdad();
+
         Cliente cliente = new Cliente();
         cliente.setEdad(28);
         cliente.setNombre("Juan Perez");

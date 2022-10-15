@@ -1,0 +1,13 @@
+* vectores se inicializa con una capacidad de 10, se puede modificar con 
+    initialcapacity 
+    trimtosize (reduce el tamanio al nro de elementos que tiene)
+
+* los arraylist o list initialcapacity (capacidad actual * 0.5)
+
+* vectores se usa para concurrencia y arraylist para secuencial
+
+* arraylist mas rapido para escribir
+
+* linkedlist para buscar datos, se puede inicializar con los datos de una lista = new LinkedList<String>(arraylist)
+
+* mapas hash o treemap, for(Map.Entry<String,int> element : mapa.entrySet())
