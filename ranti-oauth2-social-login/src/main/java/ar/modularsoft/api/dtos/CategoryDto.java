@@ -34,8 +34,6 @@ public class CategoryDto {
 
     public CategoryDto(Category category) {
         BeanUtils.copyProperties(category, this);
-
-       
     }
 
 }

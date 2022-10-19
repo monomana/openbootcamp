@@ -1,5 +1,7 @@
 package ar.modularsoft.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.info.BuildProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.AuthorizationCodeGrantBuilder;
@@ -21,6 +23,8 @@ import java.util.List;
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+    @Autowired
+    private BuildProperties buildProperties;
 
     @Bean
     public Docket apiDocket() {
@@ -36,11 +40,12 @@ public class SwaggerConfig {
 
     }
 
+
     private ApiInfo getApiInfo() {
         return new ApiInfo(
-                "Ranti Service API",
-                "Ranti Service API Description",
-                "1.0",
+                buildProperties.getName()+" Service API",
+                buildProperties.getName()+ " - API Swagger documentation",
+                ""+buildProperties.getVersion(),
                 "http://modularsoft.ar",
                 new Contact("Ranti", "https://modularsoft.ar", "contacto@modularsoft.com.ar"),
                 "LICENSE",

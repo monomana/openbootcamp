@@ -23,6 +23,7 @@ public class RantiApplication extends SpringBootServletInitializer {
 	public static void main(String[] args) {
 		SpringApplicationBuilder app = new SpringApplicationBuilder(RantiApplication.class);
 		app.run();
+//		System.getenv().forEach((key,value)-> System.out.println(key+" "+value));
 	}
 
 	@Override

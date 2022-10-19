@@ -1,0 +1,20 @@
+CREATE USER 'catesedb'@'66.97.46.238' IDENTIFIED BY 'C4t3s3';
+GRANT ALL PRIVILEGES ON catese . * TO 'catesedb'@'66.97.46.238';
+FLUSH PRIVILEGES;
+
+
+CREATE DATABASE catese;
+USE catese;
+
+CREATE TABLE contact_form
+    (
+    id INT(10) auto_increment,
+    name varchar(50),
+    email varchar(50),
+    phone varchar(20),
+    message text,
+    company varchar(100),
+    PRIMARY KEY(id));
+
+    
+    ALTER TABLE `catese`.`contact_form` ADD COLUMN `phone` VARCHAR(20) AFTER `email`;
