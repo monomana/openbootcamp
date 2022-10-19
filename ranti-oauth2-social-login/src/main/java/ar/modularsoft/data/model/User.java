@@ -1,6 +1,8 @@
 package ar.modularsoft.data.model;
 
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,6 +12,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Date;
 
+//@ApiModel("Entidad usuario para realizar la autentcacion")
 @Builder
 @Data //@ToString, @EqualsAndHashCode, @Getter, @Setter, @RequiredArgsConstructor
 @NoArgsConstructor
@@ -17,10 +20,12 @@ import java.util.Date;
 @Entity(name = "user")
 public class User {
 
+   // @ApiModelProperty("Id autoincremental")
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String username;
+    // @ApiModelProperty("campo oculto y hasheado")
     private String password;
     private String firstName;
     private String lastName;
