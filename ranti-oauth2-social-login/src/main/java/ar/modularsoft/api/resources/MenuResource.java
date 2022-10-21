@@ -23,7 +23,7 @@ import java.util.stream.Stream;
 
 @Slf4j
 @Api( tags = "Menu")
-@PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER')")
+@PreAuthorize("hasRole('ADMIN')")
 @RestController
 @RequestMapping(MenuResource.MENU)
 public class MenuResource {
