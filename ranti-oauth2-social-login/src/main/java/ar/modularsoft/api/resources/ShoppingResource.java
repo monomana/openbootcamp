@@ -17,7 +17,7 @@ import javax.validation.Valid;
 import java.util.Date;
 import java.util.stream.Stream;
 
-@Api( tags = "Shopping")
+@Api(tags = "Shopping")
 @PreAuthorize("hasRole('ADMIN') or hasRole('MANAGER') or hasRole('USER') or hasRole('OPERATOR')")
 @RestController
 @RequestMapping(ShoppingResource.SHOPPING)
@@ -25,6 +25,7 @@ public class ShoppingResource {
     public static final String SHOPPING = "/shopping";
     public static final String SHOPPING_BY_USER_ID = "/{user_id}";
     public static final String SHOPPING_BY_USER_ID_AND_STATE = "/by-state";
+    public static final String SHOPPING_BY_USER_ID_AND_COMPANY = "/by-company";
     private final ShoppingService shoppingService;
 
     @Autowired
@@ -34,11 +35,12 @@ public class ShoppingResource {
 
     @SecurityRequirement(name = "bearerAuth")
     @PostMapping
-    public void createShopping(@Valid @RequestBody  ShoppingDto shoppingDto) {
-         // shoppingDto.setCreatedAt(new Date());
+    public void createShopping(@Valid @RequestBody ShoppingDto shoppingDto) {
+        // shoppingDto.setCreatedAt(new Date());
         this.shoppingService.createShopping(shoppingDto.toShopping());
     }
-  // @PreAuthorize("permitAll()")
+
+    // @PreAuthorize("permitAll()")
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping()
     public Stream<ShoppingDto> getAllOrders() {
@@ -49,16 +51,36 @@ public class ShoppingResource {
     @SecurityRequirement(name = "bearerAuth")
     @GetMapping(SHOPPING_BY_USER_ID_AND_STATE)
     public Page<ShoppingDto> getAllOrdersByUserIdAndState(@RequestParam(required = true) int userId,
-                                                  @RequestParam(required = true) int state,
-                                                  @RequestParam(defaultValue = "0") int page,
-                                                  @RequestParam(defaultValue = "10") int size,
-                                                  @RequestParam(defaultValue = "id") String sortField,
-                                                  @RequestParam(defaultValue = "true") boolean asc) {
-        if(!asc)
-            return  shoppingService.getShoppingByUserIdAndState(userId,state,
+                                                          @RequestParam(required = true) int state,
+                                                          @RequestParam(defaultValue = "0") int page,
+                                                          @RequestParam(defaultValue = "10") int size,
+                                                          @RequestParam(defaultValue = "id") String sortField,
+                                                          @RequestParam(defaultValue = "true") boolean asc) {
+        if (!asc)
+            return shoppingService.getShoppingByUserIdAndState(userId, state,
                             PageRequest.of(page, size, Sort.by(sortField).descending()))
                     .map(ShoppingDto::new);
-        return  shoppingService.getShoppingByUserIdAndState(userId,state, PageRequest.of(page, size, Sort.by(sortField)))
+        return shoppingService.getShoppingByUserIdAndState(userId, state, PageRequest.of(page, size, Sort.by(sortField)))
+                .map(ShoppingDto::new);
+
+    }
+
+    @PreAuthorize("permitAll()")
+    @SecurityRequirement(name = "bearerAuth")
+    @GetMapping(SHOPPING_BY_USER_ID_AND_COMPANY)
+    public Page<ShoppingDto> getAllOrdersByUserIdAndCompanyAndState(
+            @RequestParam(required = true) int userId,
+            @RequestParam(defaultValue = "") int companyId,
+            // @RequestParam(required = false) int state,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(defaultValue = "id") String sortField,
+            @RequestParam(defaultValue = "true") boolean asc) {
+        if (!asc)
+            return shoppingService.getShoppingByUserIAndCompanyId(userId, companyId,
+                            PageRequest.of(page, size, Sort.by(sortField).descending()))
+                    .map(ShoppingDto::new);
+        return shoppingService.getShoppingByUserIAndCompanyId(userId,companyId,  PageRequest.of(page, size, Sort.by(sortField)))
                 .map(ShoppingDto::new);
 
     }
@@ -124,7 +146,6 @@ public class ShoppingResource {
     }
 
  */
-
 
 
 }

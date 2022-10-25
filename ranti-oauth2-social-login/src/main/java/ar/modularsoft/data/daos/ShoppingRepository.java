@@ -16,4 +16,5 @@ public interface ShoppingRepository extends JpaRepository<Shopping, Integer > {
 
     List<Shopping> findAllByUserId(Integer userId);
     Page<Shopping> findAllByUserIdAndState(Integer userId, int state, Pageable page);
+    Page<Shopping> findAllByUserIdAndCompanyId(Integer userId,Integer companyId, Pageable page);
 }

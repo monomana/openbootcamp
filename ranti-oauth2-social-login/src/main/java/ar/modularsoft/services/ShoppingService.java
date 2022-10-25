@@ -53,7 +53,9 @@ System.out.println(categoryname);
     public Page<Shopping> getShoppingByUserIdAndState(int userId, int state, Pageable page) {
         return this.shoppingRepository.findAllByUserIdAndState(userId,state,page);
     }
-
+    public Page<Shopping> getShoppingByUserIAndCompanyId(int userId, int companyId, Pageable page) {
+        return this.shoppingRepository.findAllByUserIdAndCompanyId(userId,companyId,page);
+    }
 
  /*   public Stream< Category > readAll(Role roleClaim) {
         return this.categoryRepository.findByRoleIn(authorizedRoles(roleClaim)).stream();
